@@ -7,7 +7,44 @@
 #include <cctype>     // Allows using the tolower() function
 using namespace std;
 
-// Global constants
+const int DICT_SIZE = 21735;
+const int WORD_SIZE = 82;
+int numberOfWords = 0;
+
+
+
+
+void compare(char* dictionary, char userWord){
+    bool compareCheck;
+    for (int i=0; i< DICT_SIZE; i++) {
+        if (strcmp(dictionary[i], userWord) == 0) {
+            compareCheck = true;
+            break;
+        } else {
+            compareCheck = false;
+        }
+    }
+    if (compareCheck){
+        cout << userWord << " IS in the dictionary";
+    }
+    else {
+        cout << userWord << " is NOT in the dictionary";
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -18,6 +55,23 @@ int main()
     // Declare variables
     int menuOption;                   // Userinput for menu option
     char returnCharacter;             // Separately store the return character so cin.getline does not consider it the next user input
+    char userWord[WORD_SIZE];
+    char dictionary[DICT_SIZE][WORD_SIZE];
+    char theWord[WORD_SIZE];
+
+    ifstream inStream;
+    inStream.open("dictionary.txt");
+    if (!inStream.is_open()) {
+        cout << "Could not find dictionary.txt.  Exiting..." << endl;
+        exit(-1);
+    }
+    while (inStream >> theWord) {
+        if (strlen(theWord) >= 3) {
+            strncpy(dictionary[numberOfWords], theWord, strlen(theWord) + 1);
+            numberOfWords++;
+        }
+    }
+    inStream.close();
 
     // Display menu and handle menu options
     cout << "Choose from the following options: \n"
@@ -34,7 +88,8 @@ int main()
     switch( menuOption) {
         case 1: // Do dictionary lookup of a word and indicate whether or not it was found.
             cout << "Enter a word to be looked up in dictionary: ";
-
+            cin.getline(userWord, 82);
+            compare(dictionary, userWord);
             break;
 
         case 2: // Encode some text
