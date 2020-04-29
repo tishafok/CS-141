@@ -1,4 +1,3 @@
-# CS-141
-Project 3
+UIC CS-141
+C/C++ Projects
 
-We can leave general comments here.
